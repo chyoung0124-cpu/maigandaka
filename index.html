@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="zh-Hant" class="h-full bg-white">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
+  <title>賣肝打卡</title>
+
+  <!-- iOS PWA meta -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="賣肝打卡">
+  <link rel="apple-touch-icon" href="icons/icon-192.png">
+
+  <link rel="manifest" href="manifest.webmanifest">
+  <meta name="theme-color" content="#0b0c0d">
+
+  <link rel="stylesheet" href="styles.css">
+
+  <!-- Prevent iOS font auto-zoom -->
+  <meta name="format-detection" content="telephone=no">
+</head>
+<body class="h-full">
+  <div id="app">
+    <header class="app-header">
+      <div class="title-row">
+        <h1>賣肝打卡</h1>
+        <div id="monthBalance" class="badge">本月：+00:00</div>
+      </div>
+      <div class="clock-wrap">
+        <canvas id="ledClock" width="720" height="200" aria-label="LED Clock"></canvas>
+        <div class="clock-date" id="clockDate"></div>
+      </div>
+    </header>
+
+    <main class="content">
+      <section class="card">
+        <div class="today-row">
+          <div class="today-col">
+            <div class="label">今日上班</div>
+            <div class="value" id="startTime">—</div>
+          </div>
+          <div class="today-col">
+            <div class="label">今日下班</div>
+            <div class="value" id="endTime">—</div>
+          </div>
+          <div class="today-col">
+            <div class="label">今日結果</div>
+            <div class="value delta" id="todayDelta">+00:00</div>
+          </div>
+        </div>
+
+        <div class="btn-row">
+          <button id="btnClockIn" class="btn primary">上班</button>
+          <button id="btnClockOut" class="btn">下班</button>
+          <button id="btnEditToday" class="btn ghost">修改今日</button>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>歷史紀錄</h2>
+        <div class="table-wrap">
+          <table id="historyTable" class="table">
+            <thead>
+              <tr>
+                <th>日期</th>
+                <th>上班</th>
+                <th>下班</th>
+                <th>時長</th>
+                <th>結果</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+
+    <dialog id="editDialog">
+      <form method="dialog" id="editForm">
+        <h3 id="editTitle">編輯紀錄</h3>
+        <label class="field">
+          <span>日期</span>
+          <input type="date" id="editDate">
+        </label>
+        <label class="field">
+          <span>上班</span>
+          <input type="time" id="editStart" step="60">
+        </label>
+        <label class="field">
+          <span>下班</span>
+          <input type="time" id="editEnd" step="60">
+        </label>
+        <div class="dialog-actions">
+          <button value="cancel" class="btn ghost">取消</button>
+          <button id="btnDelete" class="btn danger" type="button">刪除</button>
+          <button id="btnSave" class="btn primary" type="submit">儲存</button>
+        </div>
+      </form>
+    </dialog>
+
+    <footer class="app-footer">
+      <span>每月 1 號本月累積自動歸零</span>
+    </footer>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
